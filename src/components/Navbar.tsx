@@ -24,6 +24,16 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // Lock body scroll while the mobile menu is open
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [mobileOpen]);
+
   return (
     <>
       <motion.header
@@ -97,13 +107,29 @@ export default function Navbar() {
       {/* Mobile menu */}
       <AnimatePresence>
         {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.25 }}
-            className="fixed top-[68px] left-4 right-4 z-40 glass rounded-2xl p-4 border border-white/[0.1]"
-          >
+          <>
+            {/* Backdrop — closes the menu on tap */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={() => setMobileOpen(false)}
+              className="fixed inset-0 top-[68px] z-40 bg-black/70 backdrop-blur-sm md:hidden"
+            />
+
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.25 }}
+              className="fixed top-[68px] left-4 right-4 z-50 rounded-2xl p-4 border border-white/[0.1] shadow-card md:hidden"
+              style={{
+                background: 'rgba(8, 8, 20, 0.97)',
+                backdropFilter: 'blur(24px) saturate(180%)',
+                WebkitBackdropFilter: 'blur(24px) saturate(180%)',
+              }}
+            >
             {links.map((link, i) => (
               <motion.a
                 key={link.href}
@@ -123,6 +149,7 @@ export default function Navbar() {
               </a>
             </div>
           </motion.div>
+          </>
         )}
       </AnimatePresence>
     </>
