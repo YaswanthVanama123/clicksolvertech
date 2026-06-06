@@ -3,6 +3,7 @@ import { Link, useParams, Navigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, ExternalLink, CheckCircle2, AlertCircle, Sparkles, Target, Code2, Wrench, ChevronRight } from 'lucide-react';
 import { projects } from '../data/projects';
+import { track } from '../lib/analytics';
 
 const LOGO_URL =
   'https://i.postimg.cc/c1jjNGSz/49838C81-6436-48A7-8999-491E779EEF19-2-removebg-preview-%282%29.png';
@@ -129,6 +130,7 @@ export default function ProjectDetail() {
                       href={project.href}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => track('project_live_click', { slug: project.slug, url: project.href })}
                       className="inline-flex items-center gap-1.5 text-[11px] font-semibold px-3 py-1 rounded-full border border-white/[0.12] text-white hover:bg-white/[0.06] transition"
                     >
                       Visit Live <ExternalLink size={10} />

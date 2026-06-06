@@ -8,8 +8,8 @@ const LOGO_URL =
 const links = [
   { label: 'Services', href: '#services' },
   { label: 'Work', href: '#portfolio' },
+  { label: 'Enviromaster', href: '#enviromaster' },
   { label: 'About', href: '#about' },
-  { label: 'Tech Stack', href: '#tech' },
   { label: 'Contact', href: '#contact' },
 ];
 
@@ -42,11 +42,11 @@ export default function Navbar() {
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
-            ? 'glass border-b border-white/[0.06] py-3'
+            ? 'glass border-0 py-3'
             : 'bg-transparent py-5'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 flex items-center justify-between">
           {/* Logo */}
           <a href="#" className="flex items-center gap-2.5 group">
             <img
@@ -55,7 +55,7 @@ export default function Navbar() {
               className="w-10 h-10 object-contain transition-transform duration-300 group-hover:scale-105"
             />
             <span className="font-display font-800 text-[1.15rem] text-white tracking-tight">
-              Click<span className="gradient-text">Solver</span>
+              Click<span className="gradient-text bg-[length:200%_200%] animate-gradient-x">Solver</span>
               <span className="ml-1.5 text-slate-400 font-600">Technologies</span>
             </span>
           </a>

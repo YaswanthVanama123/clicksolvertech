@@ -28,7 +28,7 @@ export default function Footer() {
     <footer className="relative border-t border-white/[0.06] pt-14 md:pt-20 pb-8 md:pb-10 overflow-hidden">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[200px] bg-primary/[0.04] rounded-full blur-[80px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 relative z-10">
         {/* CTA banner */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}

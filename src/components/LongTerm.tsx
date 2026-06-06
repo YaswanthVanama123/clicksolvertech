@@ -97,11 +97,11 @@ export default function LongTerm() {
   const inView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
-    <section id="longterm" className="py-16 md:py-24 lg:py-28 relative overflow-hidden" ref={ref}>
+    <section id="longterm" className="py-12 sm:py-16 md:py-24 lg:py-28 relative overflow-hidden" ref={ref}>
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-surface/50 to-transparent pointer-events-none" />
       <div className="absolute top-1/2 right-0 w-[600px] h-[600px] bg-secondary/[0.05] rounded-full blur-[130px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
 
         {/* Header */}
         <motion.div

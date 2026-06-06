@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect, type FormEvent } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { Send, Mail, Phone, Globe, Clock, CheckCircle2, Loader2, MessageSquare, ChevronDown } from 'lucide-react';
+import { Send, Mail, Phone, Globe, Clock, CheckCircle2, Loader2, MessageSquare, ChevronDown, AlertTriangle, ArrowRight } from 'lucide-react';
+import { submitContactMessage } from '../lib/contact';
+import { track } from '../lib/analytics';
 
 const contactInfo = [
   {
@@ -153,6 +155,7 @@ export default function Contact() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-80px' });
   const [status, setStatus] = useState<Status>('idle');
+  const [errorMsg, setErrorMsg] = useState<string>('');
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -166,18 +169,33 @@ export default function Contact() {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setStatus('loading');
-    setTimeout(() => setStatus('success'), 1800);
+    setErrorMsg('');
+    try {
+      const id = await submitContactMessage(form);
+      track('contact_submit', {
+        service: form.service,
+        budget: form.budget || 'unspecified',
+        has_company: form.company.length > 0,
+        submission_id: id,
+      });
+      setStatus('success');
+    } catch (err) {
+      console.error('[contact] submit failed', err);
+      setErrorMsg(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
+      track('contact_submit_error');
+      setStatus('error');
+    }
   };
 
   return (
-    <section id="contact" className="py-16 md:py-24 lg:py-28 relative overflow-hidden" ref={ref}>
+    <section id="contact" className="py-12 sm:py-16 md:py-24 lg:py-28 relative overflow-hidden" ref={ref}>
       <div className="absolute inset-0 dot-grid opacity-20 pointer-events-none" />
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[900px] h-[400px] bg-primary/[0.06] rounded-full blur-[120px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -228,11 +246,41 @@ export default function Contact() {
               </motion.div>
             ))}
 
+            {/* CEO direct line */}
+            <motion.a
+              href="mailto:hanithavanama@clicksolvertech.com"
+              onClick={() => track('ceo_email_click')}
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.65 }}
+              whileHover={{ y: -3 }}
+              className="glass-card rounded-xl p-5 flex items-center gap-4 group hover:border-primary/40 transition-all"
+            >
+              <div className="w-12 h-12 rounded-xl bg-gradient-primary flex items-center justify-center flex-shrink-0 font-display font-700 text-white text-base shadow-button">
+                VH
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="text-[10px] font-bold uppercase tracking-[0.18em] text-primary-light mb-0.5">
+                  Talk to the founder
+                </div>
+                <div className="text-white font-display font-600 text-sm">
+                  Vanama Krishna Hanitha
+                </div>
+                <div className="text-xs text-slate-500 truncate">
+                  hanithavanama@clicksolvertech.com
+                </div>
+              </div>
+              <ArrowRight
+                size={15}
+                className="text-slate-500 group-hover:text-primary-light group-hover:translate-x-0.5 transition flex-shrink-0"
+              />
+            </motion.a>
+
             {/* Guarantee */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.7 }}
+              transition={{ delay: 0.75 }}
               className="glass-card rounded-xl p-5 bg-gradient-to-br from-primary/10 to-secondary/5"
             >
               <h4 className="font-display font-600 text-white text-sm mb-3">
@@ -280,6 +328,7 @@ export default function Contact() {
                 <button
                   onClick={() => {
                     setStatus('idle');
+                    setErrorMsg('');
                     setForm({ name: '', email: '', company: '', service: '', budget: '', message: '' });
                   }}
                   className="btn-ghost text-sm mt-6"
@@ -386,6 +435,18 @@ export default function Contact() {
                     </>
                   )}
                 </button>
+
+                {status === 'error' && (
+                  <div className="flex items-start gap-2.5 rounded-xl border border-rose-500/30 bg-rose-500/[0.06] px-4 py-3 text-sm text-rose-200">
+                    <AlertTriangle size={15} className="text-rose-400 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-medium text-rose-100">Couldn't send your message.</div>
+                      <p className="text-rose-300/90 text-xs leading-[1.6] mt-1">
+                        {errorMsg || 'Please try again, or email contact@clicksolvertech.com directly.'}
+                      </p>
+                    </div>
+                  </div>
+                )}
 
                 <p className="text-center text-xs text-slate-600">
                   We take your privacy seriously. No spam, ever. Your details are used

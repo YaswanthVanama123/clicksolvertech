@@ -14,6 +14,7 @@
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 80px;
+    overflow-x: clip;
   }
 
   body {
@@ -22,7 +23,8 @@
     font-family: 'Inter', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-x: hidden;
+    overflow-x: clip;
+    width: 100%;
   }
 
   ::selection {
@@ -162,10 +164,10 @@
   .section-title {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-weight: 800;
-    font-size: clamp(2rem, 4vw, 3rem);
+    font-size: clamp(1.75rem, 5.5vw, 3rem);
     letter-spacing: -0.03em;
     color: #F1F5F9;
-    line-height: 1.1;
+    line-height: 1.12;
   }
 
   .section-desc {

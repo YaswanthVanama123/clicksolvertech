@@ -37,11 +37,11 @@ export default function About() {
   const inView = useInView(ref, { once: true, margin: '-80px' });
 
   return (
-    <section id="about" className="py-16 md:py-24 lg:py-28 relative overflow-hidden" ref={ref}>
+    <section id="about" className="py-12 sm:py-16 md:py-24 lg:py-28 relative overflow-hidden" ref={ref}>
       <div className="absolute inset-0 dot-grid opacity-20 pointer-events-none" />
       <div className="absolute top-1/2 right-0 w-[500px] h-[500px] bg-secondary/[0.05] rounded-full blur-[100px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
