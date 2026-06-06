@@ -14,6 +14,7 @@ import About from '../components/About';
 import Team from '../components/Team';
 import LongTerm from '../components/LongTerm';
 import Testimonials from '../components/Testimonials';
+import Faq from '../components/Faq';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
 
@@ -53,6 +54,7 @@ export default function Home() {
         <LongTerm />
         <About />
         <Testimonials />
+        <Faq />
         <Contact />
       </main>
 

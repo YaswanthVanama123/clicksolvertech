@@ -8,11 +8,6 @@ import {
   Smartphone,
   CheckCircle2,
   ArrowRight,
-  Sparkles,
-  Calculator,
-  ClipboardList,
-  Truck,
-  WifiOff,
 } from 'lucide-react';
 import MobilePillTabs from './MobilePillTabs';
 
@@ -52,13 +47,6 @@ const builtForFranchise = [
   },
 ];
 
-const whyOtherOwners = [
-  { icon: Calculator, title: 'We already know your pricing model', desc: 'Service frequency tiers, profitability rules, customer types — we\'ve modeled them in production.' },
-  { icon: ClipboardList, title: 'We know the proposal workflow', desc: 'From customer entry to signed agreement, every step already lives in our codebase.' },
-  { icon: Truck, title: 'We know the delivery & inventory loops', desc: 'Stock checkout, reconciliation, route handoffs — built and battle-tested for daily ops.' },
-  { icon: WifiOff, title: 'We know the field-team reality', desc: 'Patchy connectivity, gloved hands, fast turnaround — our mobile app is built for it.' },
-];
-
 export default function EnviromasterSpotlight() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-80px' });
@@ -96,8 +84,7 @@ export default function EnviromasterSpotlight() {
           </h2>
           <p className="section-desc mx-auto">
             We built the full operations stack for Jeffrey Bolden's Enviromaster
-            franchise — pricing, proposals, inventory, and field-team mobile —
-            and we're ready to do the same for yours.
+            franchise — pricing, proposals, inventory, and field-team mobile.
           </p>
         </motion.div>
 
@@ -124,74 +111,6 @@ export default function EnviromasterSpotlight() {
             <FranchiseCard key={p.name} p={p} index={i} inView={inView} />
           ))}
         </div>
-
-        {/* Why other Enviromaster owners should pick us */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="relative glass-card rounded-2xl sm:rounded-3xl p-5 sm:p-10 lg:p-14 overflow-hidden border border-white/[0.08]"
-        >
-          <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/[0.06] via-blue-500/[0.04] to-violet-500/[0.04] pointer-events-none" />
-          <div className="absolute -top-20 -right-20 w-[400px] h-[400px] bg-cyan-500/[0.08] rounded-full blur-[100px] pointer-events-none" />
-
-          <div className="relative z-10">
-            <div className="flex items-center gap-2 mb-5">
-              <Sparkles size={14} className="text-cyan-400" />
-              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-cyan-300">
-                For Enviromaster Franchise Owners
-              </span>
-            </div>
-            <h3 className="font-display font-[800] text-white text-2xl sm:text-3xl tracking-tight leading-[1.15] mb-5 max-w-3xl">
-              Skip the 12-month learning curve. <br className="hidden sm:block" />
-              <span className="gradient-text bg-[length:200%_200%] animate-gradient-x">
-                We already know your business.
-              </span>
-            </h3>
-            <p className="text-slate-300 text-[0.95rem] leading-[1.75] max-w-2xl mb-8">
-              Other agencies will spend months learning the Enviromaster pricing
-              model, sales workflow, and field-ops patterns — at your expense.
-              We've shipped all of it to production for Northern Virginia. You
-              get a head start, and so does your bottom line.
-            </p>
-
-            <div className="grid sm:grid-cols-2 gap-4 mb-9">
-              {whyOtherOwners.map((w, i) => (
-                <motion.div
-                  key={w.title}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={inView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ duration: 0.4, delay: 0.6 + i * 0.08 }}
-                  className="flex gap-3"
-                >
-                  <div className="w-9 h-9 rounded-xl bg-cyan-500/10 border border-cyan-500/25 flex items-center justify-center flex-shrink-0">
-                    <w.icon size={16} className="text-cyan-300" />
-                  </div>
-                  <div>
-                    <h4 className="font-display font-600 text-white text-sm mb-1">{w.title}</h4>
-                    <p className="text-slate-400 text-xs leading-[1.7]">{w.desc}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-3 sm:items-center">
-              <a
-                href="#contact"
-                className="btn-primary inline-flex items-center justify-center gap-2 text-sm"
-              >
-                Talk to Us About Your Franchise
-                <ArrowRight size={15} />
-              </a>
-              <a
-                href="mailto:hanithavanama@clicksolvertech.com"
-                className="btn-ghost inline-flex items-center justify-center gap-2 text-sm"
-              >
-                Email the founder direct
-              </a>
-            </div>
-          </div>
-        </motion.div>
       </div>
     </section>
   );
@@ -224,7 +143,7 @@ function FranchiseCard({ p, index, inView }: { p: FranchiseCardData; index: numb
           {p.name}
         </h3>
         <p className={`text-xs font-medium mb-4 ${p.accent}`}>{p.sub}</p>
-        <p className="text-slate-400 text-sm leading-[1.75] mb-5">{p.desc}</p>
+        <p className="text-slate-400 text-[0.85rem] sm:text-sm leading-[1.7] sm:leading-[1.75] mb-4 sm:mb-5 line-clamp-3 lg:line-clamp-none">{p.desc}</p>
 
         <ul className="space-y-2 mb-5">
           {p.bullets.map((b) => (

@@ -55,19 +55,22 @@ function ProjectCard({ proj, delay }: { proj: Project; delay: number }) {
           </span>
         </div>
 
-        <h3 className="font-display font-700 text-[1.1rem] text-white mb-1 relative">
+        <h3 className="font-display font-700 text-[1.05rem] sm:text-[1.1rem] text-white mb-1 relative">
           {proj.title}
         </h3>
-        <p className="text-xs text-slate-500 mb-4 relative">{proj.client}</p>
-        <p className="text-slate-400 text-sm leading-[1.8] mb-5 relative">{proj.desc}</p>
+        <p className="text-xs text-slate-500 mb-3 sm:mb-4 relative">{proj.client}</p>
+        {/* Description — hidden on mobile carousel, full on tablet+ grid */}
+        <p className="hidden md:block text-slate-400 text-sm leading-[1.8] mb-5 relative">
+          {proj.desc}
+        </p>
 
-        {/* Impact */}
-        <div className="bg-white/[0.03] border border-white/[0.05] rounded-xl px-4 py-3 mb-5 relative">
+        {/* Impact — hidden on mobile carousel, full on tablet+ grid */}
+        <div className="hidden md:block bg-white/[0.03] border border-white/[0.05] rounded-xl px-4 py-3 mb-5 relative">
           <p className="text-xs text-slate-500 font-mono">{proj.impact}</p>
         </div>
 
         {/* Tags */}
-        <div className="flex flex-wrap gap-2 mb-5 relative">
+        <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4 sm:mb-5 relative max-h-[60px] md:max-h-none overflow-hidden">
           {proj.tags.map((tag) => (
             <span key={tag} className="tag">{tag}</span>
           ))}

@@ -262,7 +262,7 @@ function SupportingTestimonialCard({
           <Star key={si} size={12} className="text-amber-400 fill-amber-400" />
         ))}
       </div>
-      <p className="text-slate-300 text-[0.85rem] leading-[1.8] flex-1 mb-5 italic">
+      <p className="text-slate-300 text-[0.85rem] leading-[1.8] flex-1 mb-5 italic line-clamp-5 md:line-clamp-none">
         "{t.quote}"
       </p>
       <div className="flex items-center gap-3 pt-4 border-t border-white/[0.06]">
