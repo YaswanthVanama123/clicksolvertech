@@ -27,7 +27,7 @@ export default function Navbar() {
           {/* Brand — text only, like Apple */}
           <a
             href="#"
-            className="font-display font-800 text-[1rem] sm:text-[1.05rem] text-white tracking-tight whitespace-nowrap min-w-0"
+            className="font-display font-[900] text-[1.05rem] sm:text-[1.1rem] text-white tracking-tight whitespace-nowrap min-w-0"
           >
             <span className="hidden sm:inline">
               Click<span className="gradient-text bg-[length:200%_200%] animate-gradient-x">Solver</span>
