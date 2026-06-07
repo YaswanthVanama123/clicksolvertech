@@ -78,7 +78,7 @@ function CustomSelect({ options, value, placeholder = 'Select...', onChange, req
 
   return (
     <div ref={ref} className="relative">
-      {/* Hidden native input for form validation */}
+      {/* Hidden native input for form validation  */}
       {required && (
         <input
           tabIndex={-1}
