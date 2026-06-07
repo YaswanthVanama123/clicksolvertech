@@ -5,9 +5,6 @@ import { ArrowLeft, ArrowRight, ExternalLink, CheckCircle2, AlertCircle, Sparkle
 import { projects } from '@/data/projects';
 import { track } from '@/services/analytics';
 
-const LOGO_URL =
-  'https://i.postimg.cc/c1jjNGSz/49838C81-6436-48A7-8999-491E779EEF19-2-removebg-preview-%282%29.png';
-
 function pad2(n: number) {
   return n.toString().padStart(2, '0');
 }
@@ -66,9 +63,12 @@ export default function ProjectDetail() {
         <div className="max-w-6xl mx-auto px-5 sm:px-8 py-3.5 flex items-center justify-between gap-4">
           <Link to="/" className="flex items-center gap-2.5 group flex-shrink-0">
             <img
-              src={LOGO_URL}
+              src="/logo.png"
               alt="ClickSolver Technologies"
               className="w-8 h-8 object-contain"
+              onError={(e) => {
+                e.currentTarget.style.display = 'none';
+              }}
             />
             <span className="hidden sm:inline font-display font-800 text-[0.95rem] text-white tracking-tight">
               Click<span className="gradient-text">Solver</span>

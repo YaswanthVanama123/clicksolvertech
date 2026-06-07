@@ -90,7 +90,7 @@ function ServiceCard({ svc, index, inView }: ServiceCardProps) {
     <motion.div
       ref={ref}
       custom={index}
-      initial="hidden"
+      initial={inView ? false : 'hidden'}
       animate={inView ? 'visible' : 'hidden'}
       variants={cardVariants}
       whileHover={{ y: -6 }}

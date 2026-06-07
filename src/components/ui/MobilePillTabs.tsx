@@ -100,19 +100,25 @@ export default function MobilePillTabs<T extends Tab>({
         </div>
       </div>
 
-      {/* Animated content panel */}
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.div
-          key={activeId}
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -8 }}
-          transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-4"
-        >
-          {renderPanel(active)}
-        </motion.div>
-      </AnimatePresence>
+      {/* Animated content panel — outer `layout` smooths height changes between
+          panels; `popLayout` lets exit/enter overlap so there's no empty gap. */}
+      <motion.div
+        layout
+        transition={{ layout: { duration: 0.32, ease: [0.22, 1, 0.36, 1] } }}
+        className="mt-4"
+      >
+        <AnimatePresence mode="popLayout" initial={false}>
+          <motion.div
+            key={activeId}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6, transition: { duration: 0.16 } }}
+            transition={{ duration: 0.26, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {renderPanel(active)}
+          </motion.div>
+        </AnimatePresence>
+      </motion.div>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ChevronDown, MessageCircleQuestion, ArrowRight } from 'lucide-react';
 import { Section, SectionHeader, GlowOrb } from '@/components/ui';
 import { fadeUpSm, inViewOnce } from '@/lib/motion';
@@ -157,28 +157,23 @@ export default function Faq() {
                 </span>
               </button>
 
-              <AnimatePresence initial={false}>
-                {isOpen && (
-                  <motion.div
-                    id={`${f.id}-panel`}
-                    role="region"
-                    key="panel"
-                    initial="collapsed"
-                    animate="open"
-                    exit="collapsed"
-                    variants={{
-                      open: { height: 'auto', opacity: 1 },
-                      collapsed: { height: 0, opacity: 0 },
-                    }}
-                    transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-                    style={{ overflow: 'hidden' }}
-                  >
-                    <p className="max-w-prose pr-12 pb-6 text-[0.95rem] leading-[1.85] text-slate-300 sm:pb-7">
-                      {f.a}
-                    </p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              {/* Panel — uses the CSS-grid `0fr → 1fr` trick for a buttery
+                  height transition. Browsers natively interpolate this without
+                  the stutter that `height: 0 → auto` introduces. */}
+              <div
+                id={`${f.id}-panel`}
+                role="region"
+                aria-hidden={!isOpen}
+                className={`grid transition-[grid-template-rows,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                  isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+                }`}
+              >
+                <div className="overflow-hidden">
+                  <p className="max-w-prose pr-12 pb-6 text-[0.95rem] leading-[1.85] text-slate-300 sm:pb-7">
+                    {f.a}
+                  </p>
+                </div>
+              </div>
             </motion.div>
           );
         })}

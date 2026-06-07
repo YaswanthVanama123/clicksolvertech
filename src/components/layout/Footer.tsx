@@ -1,9 +1,6 @@
 import { motion } from 'framer-motion';
 import { Twitter, Linkedin, Github, ArrowUpRight } from 'lucide-react';
 
-const LOGO_URL =
-  'https://i.postimg.cc/c1jjNGSz/49838C81-6436-48A7-8999-491E779EEF19-2-removebg-preview-%282%29.png';
-
 const footerLinks = {
   Services: [
     'Full-Stack Web',
@@ -63,9 +60,12 @@ export default function Footer() {
           <div className="col-span-2 md:col-span-1">
             <a href="#" className="flex items-center gap-2.5 mb-5">
               <img
-                src={LOGO_URL}
+                src="/logo.png"
                 alt="ClickSolver Technologies"
                 className="w-10 h-10 object-contain"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                }}
               />
               <span className="font-display font-800 text-[1.1rem] text-white">
                 Click<span className="gradient-text">Solver</span>

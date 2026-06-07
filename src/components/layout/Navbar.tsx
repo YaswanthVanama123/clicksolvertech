@@ -32,7 +32,7 @@ export default function Navbar() {
             <img
               src="/logo.png"
               alt="ClickSolver Technologies"
-              className="h-7 w-7 sm:h-8 sm:w-8 object-contain flex-shrink-0"
+              className="h-9 w-9 sm:h-10 sm:w-10 object-contain flex-shrink-0"
               onError={(e) => {
                 // Hide gracefully until the real logo is dropped at public/logo.png
                 e.currentTarget.style.display = 'none';

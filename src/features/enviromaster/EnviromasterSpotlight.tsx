@@ -121,7 +121,10 @@ type FranchiseCardData = (typeof builtForFranchise)[number];
 function FranchiseCard({ p, index, inView }: { p: FranchiseCardData; index: number; inView: boolean }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      // When already in view (e.g. mounted in a pill-tab panel) skip the initial
+      // state so the card renders at its final position with no entrance animation —
+      // prevents stutter when switching tabs.
+      initial={inView ? false : { opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.55, delay: 0.15 + index * 0.1 }}
       whileHover={{ y: -5 }}

@@ -245,7 +245,7 @@ export default function EngineeringPractices() {
 function EnvCard({ env, index, inView }: { env: EnvStep; index: number; inView: boolean }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={inView ? false : { opacity: 0, y: 20 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: 0.1 + index * 0.1 }}
       whileHover={{ y: -4 }}
