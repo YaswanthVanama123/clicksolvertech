@@ -5,7 +5,7 @@ import {
   Globe, Smartphone, Cloud, Database, ShieldCheck, RefreshCw,
   ArrowRight, Layers, Building2, type LucideIcon,
 } from 'lucide-react';
-import MobilePillTabs from './MobilePillTabs';
+import MobilePillTabs from '@/components/ui/MobilePillTabs';
 
 const services = [
   {

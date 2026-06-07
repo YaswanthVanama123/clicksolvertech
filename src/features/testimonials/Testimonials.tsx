@@ -1,8 +1,8 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Star, Quote, MessageSquare, MapPin, ArrowRight, ExternalLink } from 'lucide-react';
-import { track } from '../lib/analytics';
-import MobileCarousel from './MobileCarousel';
+import { track } from '@/services/analytics';
+import MobileCarousel from '@/components/ui/MobileCarousel';
 
 const supportingTestimonials = [
   {

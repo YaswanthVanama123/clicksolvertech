@@ -14,7 +14,7 @@ import {
   ArrowRight,
   Workflow,
 } from 'lucide-react';
-import MobilePillTabs from './MobilePillTabs';
+import MobilePillTabs from '@/components/ui/MobilePillTabs';
 
 type EnvStep = {
   icon: typeof Terminal;

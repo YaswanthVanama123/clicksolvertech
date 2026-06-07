@@ -2,9 +2,9 @@ import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useInView, useMotionValue, useMotionTemplate } from 'framer-motion';
 import { ArrowRight, Folder, ExternalLink } from 'lucide-react';
-import { projects, type Category, type Project } from '../data/projects';
-import { track } from '../lib/analytics';
-import MobileCarousel from './MobileCarousel';
+import { projects, type Category, type Project } from '@/data/projects';
+import { track } from '@/services/analytics';
+import MobileCarousel from '@/components/ui/MobileCarousel';
 
 type Filter = 'All' | Category;
 

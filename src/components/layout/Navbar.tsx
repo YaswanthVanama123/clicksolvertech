@@ -24,11 +24,20 @@ export default function Navbar() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 flex items-center justify-between gap-3">
-          {/* Brand — text only, like Apple */}
+          {/* Brand — logo + text */}
           <a
             href="#"
-            className="font-display font-[900] text-[1.05rem] sm:text-[1.1rem] text-white tracking-tight whitespace-nowrap min-w-0"
+            className="font-display flex items-center gap-2.5 font-[900] text-[1.05rem] tracking-tight whitespace-nowrap text-white min-w-0 sm:text-[1.1rem]"
           >
+            <img
+              src="/logo.png"
+              alt="ClickSolver Technologies"
+              className="h-7 w-7 sm:h-8 sm:w-8 object-contain flex-shrink-0"
+              onError={(e) => {
+                // Hide gracefully until the real logo is dropped at public/logo.png
+                e.currentTarget.style.display = 'none';
+              }}
+            />
             <span className="hidden sm:inline">
               Click<span className="gradient-text bg-[length:200%_200%] animate-gradient-x">Solver</span>
               <span className="ml-1.5 text-slate-400 font-600">Technologies</span>

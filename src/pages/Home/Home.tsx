@@ -1,22 +1,19 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import Navbar from '../components/Navbar';
-import Hero from '../components/Hero';
-import CredentialsMarquee from '../components/CredentialsMarquee';
-import ScrollProgress from '../components/ScrollProgress';
-import Services from '../components/Services';
-import TechStack from '../components/TechStack';
-import Portfolio from '../components/Portfolio';
-import EnviromasterSpotlight from '../components/EnviromasterSpotlight';
-import EngineeringPractices from '../components/EngineeringPractices';
-import MobileStickyCTA from '../components/MobileStickyCTA';
-import About from '../components/About';
-import Team from '../components/Team';
-import LongTerm from '../components/LongTerm';
-import Testimonials from '../components/Testimonials';
-import Faq from '../components/Faq';
-import Contact from '../components/Contact';
-import Footer from '../components/Footer';
+import { Navbar, Footer, CredentialsMarquee, MobileStickyCTA } from '@/components/layout';
+import { ScrollProgress } from '@/components/ui';
+import Hero from '@/features/hero';
+import Services from '@/features/services';
+import TechStack from '@/features/techstack';
+import Portfolio from '@/features/portfolio';
+import EnviromasterSpotlight from '@/features/enviromaster';
+import EngineeringPractices from '@/features/engineering';
+import About from '@/features/about';
+import Team from '@/features/team';
+import LongTerm from '@/features/longterm';
+import Testimonials from '@/features/testimonials';
+import Faq from '@/features/faq';
+import Contact from '@/features/contact';
 
 export default function Home() {
   const { hash } = useLocation();
@@ -36,7 +33,7 @@ export default function Home() {
   }, [hash]);
 
   return (
-    <div className="bg-bg text-white min-h-screen">
+    <div className="bg-bg min-h-screen text-white">
       <div className="noise-overlay" />
 
       <ScrollProgress />

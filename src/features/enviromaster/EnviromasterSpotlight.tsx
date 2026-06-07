@@ -9,7 +9,7 @@ import {
   CheckCircle2,
   ArrowRight,
 } from 'lucide-react';
-import MobilePillTabs from './MobilePillTabs';
+import MobilePillTabs from '@/components/ui/MobilePillTabs';
 
 const builtForFranchise = [
   {

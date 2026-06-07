@@ -1,10 +1,9 @@
-import './index.css';
+import '@/styles/index.css';
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import Home from './pages/Home';
-import ProjectDetail from './pages/ProjectDetail';
-import { trackPageView } from './lib/analytics';
+import { Home, ProjectDetail } from '@/pages';
+import { trackPageView } from '@/services/analytics';
 
 function RouteAnalytics() {
   const location = useLocation();

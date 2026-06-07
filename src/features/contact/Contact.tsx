@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect, type FormEvent } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { Send, Mail, Phone, Globe, Clock, CheckCircle2, Loader2, MessageSquare, ChevronDown, AlertTriangle, ArrowRight } from 'lucide-react';
-import { submitContactMessage } from '../lib/contact';
-import { track } from '../lib/analytics';
+import { submitContactMessage } from '@/services/contact';
+import { track } from '@/services/analytics';
 
 const contactInfo = [
   {

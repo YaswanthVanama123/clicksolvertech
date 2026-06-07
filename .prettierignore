@@ -1,0 +1,12 @@
+node_modules
+dist
+dist-ssr
+build
+coverage
+.env
+.env.*
+!.env.example
+package-lock.json
+*.lock
+public/CNAME
+public/.nojekyll
