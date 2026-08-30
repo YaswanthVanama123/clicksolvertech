@@ -2,31 +2,15 @@ import { useRef, useState, useEffect, useCallback, type ReactNode } from 'react'
 import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
 
 type Props = {
-  /** Children rendered as carousel items. Each becomes one snapping card. */
   children: ReactNode;
   ariaLabel?: string;
-  /** Width of each card on mobile. Default: 82vw on phone, 55vw at sm. */
   itemClassName?: string;
-  /** Header label shown next to the paddles, e.g. "Pipeline". Optional. */
   title?: string;
   className?: string;
-  /** Auto-advance the carousel. Default: true. */
   autoplay?: boolean;
-  /** Milliseconds between auto-advances. Default: 5000. */
   autoplayInterval?: number;
 };
 
-/**
- * Mobile-first horizontal carousel with auto-scroll (Apple-style).
- *
- *  - CSS scroll-snap so manual swipes feel native
- *  - Auto-advances every `autoplayInterval` ms, wrapping to the first card
- *  - Pauses automatically when the user touches/scrolls
- *  - Manual pause/play button at the bottom right next to the dot indicators
- *  - Left/right paddle buttons at the top for explicit navigation
- *
- * Renders only on mobile/tablet (`lg:hidden`). Pair with a desktop grid.
- */
 export default function MobileCarousel({
   children,
   ariaLabel,
@@ -41,7 +25,6 @@ export default function MobileCarousel({
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(true);
   const [playing, setPlaying] = useState(autoplay);
-  // Track whether user is actively interacting (touch / drag / wheel)
   const interactingRef = useRef(false);
 
   const items = Array.isArray(children) ? children : [children];
@@ -68,7 +51,6 @@ export default function MobileCarousel({
     [],
   );
 
-  // Track scroll position → update active dot, edge state
   useEffect(() => {
     const el = scrollerRef.current;
     if (!el) return;
@@ -101,14 +83,12 @@ export default function MobileCarousel({
     };
   }, []);
 
-  // Pause autoplay while user is touching / dragging / wheel-scrolling
   useEffect(() => {
     const el = scrollerRef.current;
     if (!el) return;
 
     const start = () => { interactingRef.current = true; };
     const end = () => {
-      // Small delay so a swipe doesn't immediately get re-overridden
       setTimeout(() => { interactingRef.current = false; }, 1500);
     };
 
@@ -126,14 +106,12 @@ export default function MobileCarousel({
     };
   }, []);
 
-  // Autoplay timer
   useEffect(() => {
     if (!playing || items.length <= 1) return;
     const id = setInterval(() => {
       if (interactingRef.current) return;
       const el = scrollerRef.current;
       if (!el) return;
-      // If carousel is not in viewport, skip — saves cycles & avoids surprise jumps
       const rect = el.getBoundingClientRect();
       const inView = rect.bottom > 0 && rect.top < window.innerHeight;
       if (!inView) return;
@@ -153,7 +131,6 @@ export default function MobileCarousel({
       aria-label={ariaLabel ?? title ?? 'Card carousel'}
       aria-roledescription="carousel"
     >
-      {/* Header row: title + paddle buttons */}
       <div className="flex items-center justify-between gap-3 mb-4 px-1">
         {title ? (
           <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">
@@ -192,7 +169,6 @@ export default function MobileCarousel({
         </div>
       </div>
 
-      {/* Scroller — content fades to transparent at the page edges via mask. */}
       <div
         ref={scrollerRef}
         className="flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth -mx-5 sm:-mx-8 px-5 sm:px-8 pb-4 [&::-webkit-scrollbar]:hidden"
@@ -218,7 +194,6 @@ export default function MobileCarousel({
         ))}
       </div>
 
-      {/* Dot indicators + pause/play (Apple-style bottom row) */}
       {items.length > 1 && (
         <div className="flex items-center justify-center gap-3 mt-2 relative">
           <div className="flex items-center gap-1.5">
@@ -241,7 +216,6 @@ export default function MobileCarousel({
             ))}
           </div>
 
-          {/* Pause / Play */}
           {autoplay && (
             <button
               type="button"

@@ -17,17 +17,6 @@ type Props<T extends Tab> = {
   className?: string;
 };
 
-/**
- * Apple-style pill tabs for mobile. Renders a horizontal, scroll-snapping row
- * of rounded pills at the top, with a single animated content panel below.
- *
- * Pattern: select-one-to-view (vs. MobileCarousel which is swipe-through-all).
- *
- * Renders only on mobile/tablet (`lg:hidden`). Pair with a desktop grid:
- *
- *   <MobilePillTabs ... />               // mobile/tablet
- *   <div className="hidden lg:grid ...">  // desktop
- */
 export default function MobilePillTabs<T extends Tab>({
   tabs,
   defaultId,
@@ -40,7 +29,6 @@ export default function MobilePillTabs<T extends Tab>({
 
   const active = tabs.find((t) => t.id === activeId) ?? tabs[0];
 
-  // Center the active tab in the rail whenever it changes.
   useEffect(() => {
     const rail = railRef.current;
     if (!rail) return;
@@ -54,8 +42,6 @@ export default function MobilePillTabs<T extends Tab>({
 
   return (
     <div className={`lg:hidden ${className}`} role="region" aria-label={ariaLabel}>
-      {/* Pill tab rail — content itself fades at the edges via mask-image,
-          so no color overlay is painted over the section. */}
       <div className="relative">
         <div
           ref={railRef}
@@ -100,8 +86,6 @@ export default function MobilePillTabs<T extends Tab>({
         </div>
       </div>
 
-      {/* Animated content panel — outer `layout` smooths height changes between
-          panels; `popLayout` lets exit/enter overlap so there's no empty gap. */}
       <motion.div
         layout
         transition={{ layout: { duration: 0.32, ease: [0.22, 1, 0.36, 1] } }}

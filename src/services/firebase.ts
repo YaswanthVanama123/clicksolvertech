@@ -2,8 +2,6 @@ import { initializeApp, type FirebaseApp } from 'firebase/app';
 import { getFirestore, type Firestore } from 'firebase/firestore';
 import { getAnalytics, isSupported as isAnalyticsSupported, type Analytics } from 'firebase/analytics';
 
-// Vite injects VITE_-prefixed env vars at build time.
-// Put real values in `.env.local` (which is gitignored).
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -25,7 +23,6 @@ if (isFirebaseConfigured) {
   app = initializeApp(firebaseConfig);
   dbInstance = getFirestore(app);
 
-  // Analytics requires a browser env (window, cookies, etc.) and a measurementId.
   if (firebaseConfig.measurementId && typeof window !== 'undefined') {
     analyticsReady = isAnalyticsSupported().then((ok) => {
       if (ok && app) {
@@ -36,7 +33,6 @@ if (isFirebaseConfigured) {
     });
   }
 } else if (import.meta.env.DEV) {
-  // eslint-disable-next-line no-console
   console.warn(
     '[firebase] Skipping init — no VITE_FIREBASE_API_KEY / PROJECT_ID found. ' +
       'Copy .env.example to .env.local and fill it in.',

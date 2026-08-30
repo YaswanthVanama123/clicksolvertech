@@ -44,7 +44,6 @@ export default function Testimonials() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-primary/[0.04] rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -66,7 +65,6 @@ export default function Testimonials() {
             we've shipped production software for say about us.
           </p>
 
-          {/* Stars aggregate */}
           <div className="flex items-center justify-center gap-3 mt-8">
             <div className="flex gap-1">
               {[...Array(5)].map((_, i) => (
@@ -78,23 +76,19 @@ export default function Testimonials() {
           </div>
         </motion.div>
 
-        {/* ── Featured testimonial — Jeffrey Bolden ───────────────────────── */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.15 }}
           className="relative glass-card rounded-2xl sm:rounded-3xl p-5 sm:p-10 lg:p-14 mb-12 overflow-hidden border border-white/[0.08]"
         >
-          {/* Backdrop accents */}
           <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/[0.10] via-blue-500/[0.05] to-violet-500/[0.05] pointer-events-none" />
           <div className="absolute -top-32 -right-24 w-[500px] h-[500px] bg-cyan-500/[0.10] rounded-full blur-[120px] pointer-events-none" />
           <div className="absolute -bottom-24 -left-32 w-[400px] h-[400px] bg-violet-500/[0.08] rounded-full blur-[100px] pointer-events-none" />
           <div className="absolute inset-0 dot-grid opacity-25 pointer-events-none" />
 
           <div className="relative z-10 grid lg:grid-cols-[1fr_280px] gap-6 lg:gap-14 items-center">
-            {/* Quote column — order-2 on mobile so author shows first */}
             <div className="order-2 lg:order-1">
-              {/* Featured tag */}
               <div className="flex flex-wrap items-center gap-2 mb-5 sm:mb-6">
                 <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.18em] px-3 py-1.5 rounded-full bg-gradient-primary text-white shadow-button">
                   <Star size={11} fill="currentColor" />
@@ -106,7 +100,6 @@ export default function Testimonials() {
                 </span>
               </div>
 
-              {/* Big quote */}
               <Quote size={32} className="text-cyan-400/40 mb-4 sm:mb-5 sm:size-[42px]" />
               <blockquote className="font-display font-600 text-white text-base sm:text-2xl lg:text-[1.6rem] leading-[1.55] sm:leading-[1.45] tracking-[-0.01em] mb-6 sm:mb-8">
                 "ClickSolver Technologies built our entire operations stack — the
@@ -118,7 +111,6 @@ export default function Testimonials() {
                 ask for a better engineering partner."
               </blockquote>
 
-              {/* Stars */}
               <div className="flex items-center gap-1.5 mb-5 sm:mb-6">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} size={15} className="text-amber-400 fill-amber-400 sm:size-[17px]" />
@@ -126,7 +118,6 @@ export default function Testimonials() {
                 <span className="text-white font-600 ml-2 text-sm">5.0</span>
               </div>
 
-              {/* What we built for him */}
               <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-2 sm:mb-6">
                 {['Sales & Pricing Platform', 'Inventory Management', 'Inventory & Sales Mobile App'].map((p) => (
                   <span
@@ -140,9 +131,7 @@ export default function Testimonials() {
               </div>
             </div>
 
-            {/* Author panel — order-1 on mobile, order-2 on desktop */}
             <div className="order-1 lg:order-2 glass-card rounded-2xl p-5 sm:p-6 bg-gradient-to-br from-cyan-500/[0.06] to-blue-500/[0.04] border border-cyan-500/20">
-              {/* Mobile: horizontal layout (avatar left, name right). Desktop: stacked. */}
               <div className="flex lg:flex-col items-start gap-4 lg:gap-0">
                 <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden lg:mb-4 ring-2 ring-cyan-500/30 shadow-button bg-gradient-to-br from-cyan-500 to-blue-600 flex-shrink-0">
                   <img
@@ -177,7 +166,6 @@ export default function Testimonials() {
                 </div>
               </div>
 
-              {/* Live URLs */}
               <div className="space-y-2 mt-4 lg:mt-0 mb-4 pt-4 border-t border-cyan-500/15">
                 <div className="text-[10px] font-bold uppercase tracking-[0.18em] text-cyan-300/80 mb-2">
                   Live Production
@@ -215,8 +203,6 @@ export default function Testimonials() {
           </div>
         </motion.div>
 
-        {/* Supporting testimonials */}
-        {/* Mobile: carousel */}
         <MobileCarousel
           ariaLabel="More client testimonials"
           title="More clients · Swipe"
@@ -227,7 +213,6 @@ export default function Testimonials() {
           ))}
         </MobileCarousel>
 
-        {/* Desktop: 3-col grid */}
         <div className="hidden md:grid md:grid-cols-3 gap-5">
           {supportingTestimonials.map((t, i) => (
             <SupportingTestimonialCard key={t.name} t={t} index={i} inView={inView} />

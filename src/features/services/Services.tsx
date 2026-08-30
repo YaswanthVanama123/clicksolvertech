@@ -113,7 +113,6 @@ function ServiceCard({ svc, index, inView }: ServiceCardProps) {
         className="absolute inset-0 pointer-events-none transition-opacity"
       />
 
-      {/* Icon */}
       <div className={`card-icon-wrap mb-5 bg-gradient-to-br ${svc.color} relative transition-transform group-hover:scale-110 group-hover:-rotate-3`}>
         <svc.icon size={22} className={svc.iconColor} />
       </div>
@@ -126,7 +125,6 @@ function ServiceCard({ svc, index, inView }: ServiceCardProps) {
         {svc.desc}
       </p>
 
-      {/* Tags */}
       <div className="flex flex-wrap gap-2 relative">
         {svc.tags.map((tag) => (
           <span key={tag} className="tag">{tag}</span>
@@ -142,11 +140,9 @@ export default function Services() {
 
   return (
     <section id="services" className="py-12 sm:py-16 md:py-24 lg:py-28 relative overflow-hidden" ref={ref}>
-      {/* Section glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/[0.04] rounded-full blur-[100px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -169,8 +165,6 @@ export default function Services() {
           </p>
         </motion.div>
 
-        {/* Grid */}
-        {/* Mobile: pill tabs (Apple-style) */}
         <MobilePillTabs
           ariaLabel="Our services"
           tabs={services.map((s) => ({
@@ -185,14 +179,12 @@ export default function Services() {
           }}
         />
 
-        {/* Tablet & desktop: grid */}
         <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-5">
           {services.map((svc, i) => (
             <ServiceCard key={svc.title} svc={svc} index={i} inView={inView} />
           ))}
         </div>
 
-        {/* Franchise callout — for Enviromaster branch owners */}
         <motion.a
           href="#enviromaster"
           initial={{ opacity: 0, y: 20 }}
@@ -225,7 +217,6 @@ export default function Services() {
           </span>
         </motion.a>
 
-        {/* Bottom CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -245,7 +236,6 @@ export default function Services() {
   );
 }
 
-// Trim long service titles for tab pills (where space is tight)
 function shortServiceLabel(title: string) {
   const map: Record<string, string> = {
     'Full-Stack Web Development': 'Web',

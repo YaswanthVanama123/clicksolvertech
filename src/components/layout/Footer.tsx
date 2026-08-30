@@ -1,17 +1,35 @@
 import { motion } from 'framer-motion';
-import { Twitter, Linkedin, Github, ArrowUpRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Twitter, Linkedin, Github, ArrowUpRight, Mail } from 'lucide-react';
+import { COMPANY_EMAIL, COMPANY_MAILTO } from '@/data/contact';
 
-const footerLinks = {
+type FooterLink = { label: string; href: string };
+
+const footerLinks: Record<string, FooterLink[]> = {
   Services: [
-    'Full-Stack Web',
-    'Mobile Apps',
-    'Cloud & DevOps',
-    'Database Design',
-    'Security',
-    'Legacy Modernization',
+    { label: 'Full-Stack Web', href: '#services' },
+    { label: 'Mobile Apps', href: '#services' },
+    { label: 'Cloud & DevOps', href: '#services' },
+    { label: 'Database Design', href: '#services' },
+    { label: 'Security', href: '#services' },
+    { label: 'Legacy Modernization', href: '#services' },
   ],
-  Company: ['About Us', 'Our Work', 'Tech Stack', 'Blog', 'Careers', 'Contact'],
-  Technologies: ['React & Node.js', 'Spring Boot', 'Django & .NET', 'Flutter & RN', 'AWS / GCP / Azure', 'Kubernetes'],
+  Company: [
+    { label: 'What We Build', href: '/what-we-build' },
+    { label: 'About Us', href: '#about' },
+    { label: 'Our Work', href: '#portfolio' },
+    { label: 'Tech Stack', href: '#tech' },
+    { label: 'FAQ', href: '#faq' },
+    { label: 'Contact', href: '#contact' },
+  ],
+  Technologies: [
+    { label: 'React & Node.js', href: '#tech' },
+    { label: 'Spring Boot', href: '#tech' },
+    { label: 'Django & .NET', href: '#tech' },
+    { label: 'Flutter & RN', href: '#tech' },
+    { label: 'AWS / GCP / Azure', href: '#tech' },
+    { label: 'Kubernetes', href: '#tech' },
+  ],
 };
 
 const socials = [
@@ -26,7 +44,6 @@ export default function Footer() {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[200px] bg-primary/[0.04] rounded-full blur-[80px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 relative z-10">
-        {/* CTA banner */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -54,9 +71,7 @@ export default function Footer() {
           </div>
         </motion.div>
 
-        {/* Links grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-10 mb-10 md:mb-14">
-          {/* Brand col */}
           <div className="col-span-2 md:col-span-1">
             <a href="#" className="flex items-center gap-2.5 mb-5">
               <img
@@ -76,6 +91,13 @@ export default function Footer() {
               Enterprise software engineering. Built by seniors.
               Delivered with precision.
             </p>
+            <a
+              href={COMPANY_MAILTO}
+              className="flex w-fit items-center gap-2 text-slate-400 hover:text-white text-sm transition-colors mb-6 break-all"
+            >
+              <Mail size={14} className="text-primary-light flex-shrink-0" />
+              {COMPANY_EMAIL}
+            </a>
             <div className="flex gap-3">
               {socials.map((s) => (
                 <a
@@ -90,19 +112,27 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Link cols */}
           {Object.entries(footerLinks).map(([category, links]) => (
             <div key={category}>
               <h4 className="font-display font-600 text-white text-sm mb-5">{category}</h4>
               <ul className="space-y-3">
                 {links.map((link) => (
-                  <li key={link}>
-                    <a
-                      href="#"
-                      className="text-slate-500 hover:text-slate-300 text-sm transition-colors"
-                    >
-                      {link}
-                    </a>
+                  <li key={link.label}>
+                    {link.href.startsWith('/') ? (
+                      <Link
+                        to={link.href}
+                        className="text-slate-500 hover:text-slate-300 text-sm transition-colors"
+                      >
+                        {link.label}
+                      </Link>
+                    ) : (
+                      <a
+                        href={link.href}
+                        className="text-slate-500 hover:text-slate-300 text-sm transition-colors"
+                      >
+                        {link.label}
+                      </a>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -110,7 +140,6 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Bottom bar */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-white/[0.06]">
           <p className="text-slate-600 text-xs">
             © {new Date().getFullYear()} ClickSolver Technologies. All rights reserved.

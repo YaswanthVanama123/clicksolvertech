@@ -57,13 +57,11 @@ export default function EnviromasterSpotlight() {
       ref={ref}
       className="py-12 sm:py-16 md:py-24 lg:py-28 relative overflow-hidden"
     >
-      {/* Backdrop */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-500/[0.03] to-transparent pointer-events-none" />
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-cyan-500/[0.05] rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute inset-0 dot-grid opacity-20 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 relative z-10">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -88,8 +86,6 @@ export default function EnviromasterSpotlight() {
           </p>
         </motion.div>
 
-        {/* Three projects we built */}
-        {/* Mobile: pill tabs */}
         <MobilePillTabs
           ariaLabel="Projects we built for Enviromaster Northern Virginia"
           className="mb-12"
@@ -105,7 +101,6 @@ export default function EnviromasterSpotlight() {
           }}
         />
 
-        {/* Desktop: 3-col grid */}
         <div className="hidden lg:grid grid-cols-3 gap-5 mb-16">
           {builtForFranchise.map((p, i) => (
             <FranchiseCard key={p.name} p={p} index={i} inView={inView} />
@@ -121,9 +116,6 @@ type FranchiseCardData = (typeof builtForFranchise)[number];
 function FranchiseCard({ p, index, inView }: { p: FranchiseCardData; index: number; inView: boolean }) {
   return (
     <motion.div
-      // When already in view (e.g. mounted in a pill-tab panel) skip the initial
-      // state so the card renders at its final position with no entrance animation —
-      // prevents stutter when switching tabs.
       initial={inView ? false : { opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.55, delay: 0.15 + index * 0.1 }}

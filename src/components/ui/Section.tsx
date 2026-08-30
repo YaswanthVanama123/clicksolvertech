@@ -2,15 +2,11 @@ import { type ReactNode, type CSSProperties, forwardRef } from 'react';
 import { cn } from '@/lib/cn';
 
 type Props = {
-  /** Anchor id for in-page navigation, e.g. `services`, `portfolio` */
   id?: string;
   children: ReactNode;
   className?: string;
-  /** Extra classes on the inner max-width container */
   containerClassName?: string;
-  /** Override the default 7xl max width — e.g. for prose-narrow sections like FAQ */
   maxWidth?: 'prose' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | '6xl' | '7xl';
-  /** Render without a max-width inner container (rare — for full-bleed sections like marquees) */
   fullBleed?: boolean;
   style?: CSSProperties;
 };
@@ -29,16 +25,6 @@ const maxWidthClass: Record<NonNullable<Props['maxWidth']>, string> = {
   '7xl': 'max-w-7xl',
 };
 
-/**
- * Standard page section. Bakes in the canonical vertical padding ramp,
- * `relative + overflow-hidden` (so decorative orbs can extend safely),
- * and an inner max-width container with the responsive horizontal padding.
- *
- *   <Section id="services">
- *     <SectionHeader badge="What We Do" title="Engineering Across Every Layer" ... />
- *     ...content...
- *   </Section>
- */
 const Section = forwardRef<HTMLElement, Props>(function Section(
   {
     id,

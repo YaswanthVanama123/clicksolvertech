@@ -1,27 +1,48 @@
 import { useState, useRef, useEffect, type FormEvent } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { Send, Mail, Phone, Globe, Clock, CheckCircle2, Loader2, MessageSquare, ChevronDown, AlertTriangle, ArrowRight } from 'lucide-react';
+import { Send, Mail, Phone, Globe, Clock, CheckCircle2, Loader2, MessageSquare, ChevronDown, AlertTriangle, ArrowRight, type LucideIcon } from 'lucide-react';
 import { submitContactMessage } from '@/services/contact';
 import { track } from '@/services/analytics';
+import {
+  COMPANY_EMAIL,
+  COMPANY_MAILTO,
+  COMPANY_PHONE,
+  COMPANY_TEL,
+  COMPANY_WEBSITE,
+  OWNER_EMAIL,
+  OWNER_MAILTO,
+  OWNER_NAME,
+} from '@/data/contact';
 
-const contactInfo = [
+type ContactInfo = {
+  icon: LucideIcon;
+  label: string;
+  value: string;
+  sub: string;
+  href?: string;
+};
+
+const contactInfo: ContactInfo[] = [
   {
     icon: Mail,
     label: 'Email',
-    value: 'contact@clicksolvertech.com',
+    value: COMPANY_EMAIL,
     sub: 'We reply within 4 business hours',
+    href: COMPANY_MAILTO,
   },
   {
     icon: Phone,
     label: 'Phone',
-    value: '+1 302 723 0991',
+    value: COMPANY_PHONE,
     sub: 'Mon–Fri, 9am–6pm EST',
+    href: COMPANY_TEL,
   },
   {
     icon: Globe,
     label: 'Website',
-    value: 'www.clicksolvertech.com',
+    value: COMPANY_WEBSITE,
     sub: 'Serving globally',
+    href: `https://${COMPANY_WEBSITE}`,
   },
   {
     icon: Clock,
@@ -51,7 +72,6 @@ const budgets = [
   '$500K+',
 ];
 
-// ── Custom Dropdown ─────────────────────────────────────────────────────────
 interface CustomSelectProps {
   options: string[];
   value: string;
@@ -64,7 +84,6 @@ function CustomSelect({ options, value, placeholder = 'Select...', onChange, req
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
-  // Close on outside click
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
@@ -78,7 +97,6 @@ function CustomSelect({ options, value, placeholder = 'Select...', onChange, req
 
   return (
     <div ref={ref} className="relative">
-      {/* Hidden native input for form validation  */}
       {required && (
         <input
           tabIndex={-1}
@@ -89,7 +107,6 @@ function CustomSelect({ options, value, placeholder = 'Select...', onChange, req
         />
       )}
 
-      {/* Trigger */}
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
@@ -108,7 +125,6 @@ function CustomSelect({ options, value, placeholder = 'Select...', onChange, req
         />
       </button>
 
-      {/* Dropdown panel */}
       <AnimatePresence>
         {open && (
           <motion.ul
@@ -147,7 +163,6 @@ function CustomSelect({ options, value, placeholder = 'Select...', onChange, req
     </div>
   );
 }
-// ────────────────────────────────────────────────────────────────────────────
 
 type Status = 'idle' | 'loading' | 'success' | 'error';
 
@@ -196,7 +211,6 @@ export default function Contact() {
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[900px] h-[400px] bg-primary/[0.06] rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -220,35 +234,49 @@ export default function Contact() {
         </motion.div>
 
         <div className="grid lg:grid-cols-5 gap-10 xl:gap-14">
-          {/* Left — Info */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.2 }}
             className="lg:col-span-2 space-y-5"
           >
-            {contactInfo.map((info, i) => (
-              <motion.div
-                key={info.label}
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.3 + i * 0.1 }}
-                className="glass-card rounded-xl p-5 flex gap-4"
-              >
-                <div className="card-icon-wrap flex-shrink-0">
-                  <info.icon size={18} className="text-primary-light" />
-                </div>
-                <div>
-                  <div className="text-xs text-slate-500 font-medium mb-0.5">{info.label}</div>
-                  <div className="text-white font-medium text-sm">{info.value}</div>
-                  <div className="text-xs text-slate-500 mt-0.5">{info.sub}</div>
-                </div>
-              </motion.div>
-            ))}
+            {contactInfo.map((info, i) => {
+              const isLink = Boolean(info.href);
+              const Wrapper = isLink ? motion.a : motion.div;
+              return (
+                <Wrapper
+                  key={info.label}
+                  {...(isLink
+                    ? {
+                        href: info.href,
+                        ...(info.href?.startsWith('http')
+                          ? { target: '_blank', rel: 'noopener noreferrer' }
+                          : {}),
+                        onClick: () => track('contact_info_click', { channel: info.label }),
+                        whileHover: { y: -3 },
+                      }
+                    : {})}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={inView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ delay: 0.3 + i * 0.1 }}
+                  className={`glass-card rounded-xl p-5 flex gap-4 ${
+                    isLink ? 'hover:border-primary/40 transition-all' : ''
+                  }`}
+                >
+                  <div className="card-icon-wrap flex-shrink-0">
+                    <info.icon size={18} className="text-primary-light" />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="text-xs text-slate-500 font-medium mb-0.5">{info.label}</div>
+                    <div className="text-white font-medium text-sm break-words">{info.value}</div>
+                    <div className="text-xs text-slate-500 mt-0.5">{info.sub}</div>
+                  </div>
+                </Wrapper>
+              );
+            })}
 
-            {/* CEO direct line */}
             <motion.a
-              href="mailto:hanithavanama@clicksolvertech.com"
+              href={OWNER_MAILTO}
               onClick={() => track('ceo_email_click')}
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -264,10 +292,10 @@ export default function Contact() {
                   Talk to the founder
                 </div>
                 <div className="text-white font-display font-600 text-sm">
-                  Vanama Krishna Hanitha
+                  {OWNER_NAME}
                 </div>
                 <div className="text-xs text-slate-500 truncate">
-                  hanithavanama@clicksolvertech.com
+                  {OWNER_EMAIL}
                 </div>
               </div>
               <ArrowRight
@@ -276,7 +304,6 @@ export default function Contact() {
               />
             </motion.a>
 
-            {/* Guarantee */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -302,7 +329,6 @@ export default function Contact() {
             </motion.div>
           </motion.div>
 
-          {/* Right — Form */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
@@ -442,7 +468,15 @@ export default function Contact() {
                     <div>
                       <div className="font-medium text-rose-100">Couldn't send your message.</div>
                       <p className="text-rose-300/90 text-xs leading-[1.6] mt-1">
-                        {errorMsg || 'Please try again, or email contact@clicksolvertech.com directly.'}
+                        {errorMsg || (
+                          <>
+                            Please try again, or email{' '}
+                            <a href={COMPANY_MAILTO} className="underline hover:text-white">
+                              {COMPANY_EMAIL}
+                            </a>{' '}
+                            directly.
+                          </>
+                        )}
                       </p>
                     </div>
                   </div>

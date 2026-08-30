@@ -42,7 +42,6 @@ export default function About() {
       <div className="absolute top-1/2 right-0 w-[500px] h-[500px] bg-secondary/[0.05] rounded-full blur-[100px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -67,7 +66,6 @@ export default function About() {
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-10 md:gap-14 xl:gap-20 items-start mb-16 md:mb-20">
-          {/* Left — Story */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
@@ -107,7 +105,6 @@ export default function About() {
             </a>
           </motion.div>
 
-          {/* Right — Values */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
@@ -136,7 +133,6 @@ export default function About() {
           </motion.div>
         </div>
 
-        {/* Timeline */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -146,7 +142,6 @@ export default function About() {
             Our Journey
           </h3>
 
-          {/* Mobile & tablet: vertical list with left border */}
           <div className="relative lg:hidden pl-6 border-l border-primary/20 space-y-6">
             {milestones.map((m, i) => (
               <motion.div
@@ -156,7 +151,6 @@ export default function About() {
                 transition={{ duration: 0.5, delay: 0.6 + i * 0.1 }}
                 className="relative"
               >
-                {/* Dot */}
                 <span className="absolute -left-[1.55rem] top-4 w-3 h-3 rounded-full bg-gradient-primary border-2 border-bg" />
                 <div className="glass-card rounded-xl p-4 sm:p-5">
                   <span className="font-mono text-primary-light text-sm font-600 mb-1.5 block">
@@ -168,7 +162,6 @@ export default function About() {
             ))}
           </div>
 
-          {/* Desktop: alternating layout */}
           <div className="relative hidden lg:block">
             <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-primary/30 to-transparent" />
             <div className="space-y-6">

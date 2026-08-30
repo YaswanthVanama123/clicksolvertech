@@ -52,13 +52,11 @@ export default function ProjectDetail() {
     <div className="bg-bg text-white min-h-screen">
       <div className="noise-overlay" />
 
-      {/* Reading progress bar */}
       <div
         className="fixed top-0 left-0 right-0 z-[60] h-[2px] bg-gradient-primary origin-left"
         style={{ transform: `scaleX(${progress / 100})` }}
       />
 
-      {/* Sticky top nav */}
       <header className="sticky top-0 z-40 glass border-b border-white/[0.06]">
         <div className="max-w-6xl mx-auto px-5 sm:px-8 py-3.5 flex items-center justify-between gap-4">
           <Link to="/" className="flex items-center gap-2.5 group flex-shrink-0">
@@ -75,7 +73,6 @@ export default function ProjectDetail() {
             </span>
           </Link>
 
-          {/* Breadcrumb */}
           <nav className="hidden md:flex items-center gap-1.5 text-xs text-slate-500">
             <Link to="/" className="hover:text-slate-300 transition">Home</Link>
             <ChevronRight size={11} />
@@ -100,9 +97,7 @@ export default function ProjectDetail() {
       </header>
 
       <main className="relative">
-        {/* ── Hero ────────────────────────────────────────────────────────────── */}
         <section className="relative overflow-hidden border-b border-white/[0.06]">
-          {/* Backdrop layers */}
           <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-60 pointer-events-none`} />
           <div className="absolute inset-0 dot-grid opacity-30 pointer-events-none" />
           <div className="absolute -top-40 -right-32 w-[500px] h-[500px] bg-primary/[0.10] rounded-full blur-[100px] pointer-events-none" />
@@ -110,13 +105,11 @@ export default function ProjectDetail() {
 
           <div className="relative max-w-6xl mx-auto px-5 sm:px-8 pt-12 sm:pt-20 pb-14 sm:pb-20">
             <div className="grid lg:grid-cols-[1fr_320px] gap-10 lg:gap-14 items-start">
-              {/* Left — Title block */}
               <motion.div
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               >
-                {/* Eyebrow */}
                 <div className="flex flex-wrap items-center gap-2 mb-6">
                   <span className="section-badge">
                     <Sparkles size={11} className={project.accentColor} />
@@ -138,17 +131,14 @@ export default function ProjectDetail() {
                   )}
                 </div>
 
-                {/* Title */}
                 <h1 className="font-display font-[900] text-[2.4rem] sm:text-5xl lg:text-[3.5rem] text-white tracking-[-0.03em] leading-[1.04] mb-5">
                   {project.title}
                 </h1>
 
-                {/* Subtitle */}
                 <p className="text-slate-300 text-lg sm:text-xl leading-[1.55] max-w-2xl mb-8">
                   {project.client}
                 </p>
 
-                {/* Impact strip */}
                 <div className="inline-flex flex-wrap items-center gap-2 sm:gap-3">
                   {project.impact.split(' · ').map((bit, i) => (
                     <span
@@ -162,7 +152,6 @@ export default function ProjectDetail() {
                 </div>
               </motion.div>
 
-              {/* Right — Meta panel */}
               <motion.aside
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -193,9 +182,7 @@ export default function ProjectDetail() {
           </div>
         </section>
 
-        {/* ── Body ────────────────────────────────────────────────────────────── */}
         <div className="max-w-6xl mx-auto px-5 sm:px-8 py-14 sm:py-20 space-y-16 sm:space-y-20">
-          {/* 01. Overview */}
           <motion.section
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -221,7 +208,6 @@ export default function ProjectDetail() {
             </div>
           </motion.section>
 
-          {/* 02. Our Role */}
           <motion.section
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -242,7 +228,6 @@ export default function ProjectDetail() {
             </div>
           </motion.section>
 
-          {/* 03. Tech Stack */}
           <motion.section
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -272,7 +257,6 @@ export default function ProjectDetail() {
             </div>
           </motion.section>
 
-          {/* 04. Key Features */}
           <motion.section
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -298,7 +282,6 @@ export default function ProjectDetail() {
             </div>
           </motion.section>
 
-          {/* 05. Challenges & Solutions */}
           <motion.section
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -335,7 +318,6 @@ export default function ProjectDetail() {
             </div>
           </motion.section>
 
-          {/* 06. Outcomes */}
           <motion.section
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -357,7 +339,6 @@ export default function ProjectDetail() {
             </div>
           </motion.section>
 
-          {/* CTA banner */}
           <motion.section
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -384,7 +365,6 @@ export default function ProjectDetail() {
             </div>
           </motion.section>
 
-          {/* Prev / Next */}
           <nav className="grid sm:grid-cols-2 gap-3 pt-2">
             {prev ? (
               <Link
@@ -429,7 +409,6 @@ export default function ProjectDetail() {
         </div>
       </main>
 
-      {/* Footer strip */}
       <footer className="border-t border-white/[0.06] py-8">
         <div className="max-w-6xl mx-auto px-5 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-600">
           <span>© {new Date().getFullYear()} ClickSolver Technologies. All rights reserved.</span>

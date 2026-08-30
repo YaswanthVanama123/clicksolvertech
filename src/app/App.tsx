@@ -2,13 +2,12 @@ import '@/styles/index.css';
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Home, ProjectDetail } from '@/pages';
+import { Home, ProjectDetail, WhatWeBuild } from '@/pages';
 import { trackPageView } from '@/services/analytics';
 
 function RouteAnalytics() {
   const location = useLocation();
   useEffect(() => {
-    // Defer one tick so document.title reflects the new route
     const id = setTimeout(() => {
       trackPageView(location.pathname + location.search, document.title);
     }, 0);
@@ -31,6 +30,7 @@ function AnimatedRoutes() {
       >
         <Routes location={location}>
           <Route path="/" element={<Home />} />
+          <Route path="/what-we-build" element={<WhatWeBuild />} />
           <Route path="/projects/:slug" element={<ProjectDetail />} />
           <Route path="*" element={<Home />} />
         </Routes>

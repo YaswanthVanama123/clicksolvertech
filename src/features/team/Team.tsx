@@ -71,7 +71,6 @@ export default function Team() {
       <div className="absolute top-1/3 left-0 w-[500px] h-[500px] bg-primary/[0.05] rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -90,7 +89,6 @@ export default function Team() {
           </h2>
         </motion.div>
 
-        {/* Trust statement */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -108,7 +106,6 @@ export default function Team() {
           </p>
         </motion.div>
 
-        {/* Discipline cards */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {disciplines.map((d, i) => (
             <motion.div
@@ -118,24 +115,20 @@ export default function Team() {
               transition={{ duration: 0.5, delay: i * 0.07 }}
               className="glass-card rounded-2xl p-6 flex flex-col group"
             >
-              {/* Avatar */}
               <div
                 className={`w-12 h-12 rounded-xl bg-gradient-to-br ${d.gradient} flex items-center justify-center text-white font-display font-700 text-sm mb-4 flex-shrink-0 shadow-glow-sm`}
               >
                 {d.initials}
               </div>
 
-              {/* Role */}
               <h3 className="font-display font-700 text-[0.95rem] text-white mb-1.5 leading-snug">
                 {d.role}
               </h3>
 
-              {/* Focus */}
               <p className="text-[11px] text-primary-light font-mono mb-3 leading-[1.6]">
                 {d.focus}
               </p>
 
-              {/* Desc */}
               <p className="text-slate-400 text-xs leading-[1.8] flex-1">
                 {d.desc}
               </p>
@@ -143,7 +136,6 @@ export default function Team() {
           ))}
         </div>
 
-        {/* Bottom trust line */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}

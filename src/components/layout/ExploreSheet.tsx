@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   X,
@@ -10,16 +11,27 @@ import {
   Users,
   MessageSquare,
   MessageCircleQuestion,
+  Lightbulb,
   ArrowRight,
+  type LucideIcon,
 } from 'lucide-react';
+import { OWNER_MAILTO } from '@/data/contact';
 
 type Props = {
   open: boolean;
   onClose: () => void;
 };
 
-const sections = [
+type SectionLink = {
+  label: string;
+  icon: LucideIcon;
+  id?: string;
+  to?: string;
+};
+
+const sections: SectionLink[] = [
   { id: 'services', label: 'Services', icon: Layers },
+  { to: '/what-we-build', label: 'What We Build', icon: Lightbulb },
   { id: 'portfolio', label: 'Our Work', icon: Folder },
   { id: 'enviromaster', label: 'Enviromaster', icon: Building2 },
   { id: 'how-we-ship', label: 'How We Ship', icon: Workflow },
@@ -30,11 +42,12 @@ const sections = [
 
 const footerLinks = [
   { label: 'Tech Stack', href: '#tech' },
-  { label: 'Talk to the Founder', href: 'mailto:hanithavanama@clicksolvertech.com' },
+  { label: 'Talk to the Founder', href: OWNER_MAILTO },
 ];
 
 export default function ExploreSheet({ open, onClose }: Props) {
-  // Esc to close + body scroll lock
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
@@ -51,13 +64,16 @@ export default function ExploreSheet({ open, onClose }: Props) {
 
   const handleSectionClick = (id: string) => {
     onClose();
-    // Wait for sheet exit, then scroll
     setTimeout(() => {
       const el = document.getElementById(id);
       if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      // Update hash without re-triggering scroll
       history.replaceState(null, '', `#${id}`);
     }, 220);
+  };
+
+  const handleRouteClick = (to: string) => {
+    onClose();
+    setTimeout(() => navigate(to), 220);
   };
 
   return (
@@ -70,13 +86,11 @@ export default function ExploreSheet({ open, onClose }: Props) {
           transition={{ duration: 0.2 }}
           className="fixed inset-0 z-[60] flex items-start justify-center"
         >
-          {/* Backdrop */}
           <div
             className="absolute inset-0 bg-black/65 backdrop-blur-md"
             onClick={onClose}
           />
 
-          {/* Sheet */}
           <motion.div
             initial={{ y: '-4%', opacity: 0, scale: 0.98 }}
             animate={{ y: 0, opacity: 1, scale: 1 }}
@@ -92,7 +106,6 @@ export default function ExploreSheet({ open, onClose }: Props) {
             aria-modal="true"
             aria-label="Explore ClickSolver"
           >
-            {/* Close button */}
             <button
               type="button"
               onClick={onClose}
@@ -103,7 +116,6 @@ export default function ExploreSheet({ open, onClose }: Props) {
             </button>
 
             <div className="overflow-y-auto px-5 sm:px-8 pt-6 pb-8 sm:pt-9 sm:pb-10">
-              {/* Brand block */}
               <div className="mb-7 pr-14">
                 <h2 className="font-display font-[800] text-white text-2xl tracking-tight mb-1">
                   Click<span className="gradient-text bg-[length:200%_200%] animate-gradient-x">Solver</span>{' '}
@@ -114,14 +126,13 @@ export default function ExploreSheet({ open, onClose }: Props) {
                 </p>
               </div>
 
-              {/* Section nav grid */}
               <div className="mb-6">
                 <div className="grid grid-cols-2 gap-x-4 gap-y-1">
                   {sections.map((s) => (
                     <button
-                      key={s.id}
+                      key={s.label}
                       type="button"
-                      onClick={() => handleSectionClick(s.id)}
+                      onClick={() => (s.to ? handleRouteClick(s.to) : handleSectionClick(s.id!))}
                       className="flex items-center justify-between gap-2 py-3.5 text-left text-white text-base sm:text-[1.05rem] font-display font-600 hover:text-primary-light active:scale-[0.99] transition group"
                     >
                       <span className="flex items-center gap-3 min-w-0">
@@ -134,7 +145,6 @@ export default function ExploreSheet({ open, onClose }: Props) {
                 </div>
               </div>
 
-              {/* Footer links */}
               <div className="pt-5 border-t border-white/[0.06] flex flex-col gap-3">
                 {footerLinks.map((l) => (
                   <a

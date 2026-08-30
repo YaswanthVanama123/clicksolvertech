@@ -10,7 +10,6 @@ type Filter = 'All' | Category;
 
 const categories: Filter[] = ['All', 'Web', 'Mobile'];
 
-// ── Card with cursor-tracking spotlight ─────────────────────────────────────
 function ProjectCard({ proj, delay }: { proj: Project; delay: number }) {
   const ref = useRef<HTMLAnchorElement>(null);
   const mx = useMotionValue(0);
@@ -38,14 +37,12 @@ function ProjectCard({ proj, delay }: { proj: Project; delay: number }) {
         }}
         className={`relative glass-card rounded-2xl p-5 sm:p-7 bg-gradient-to-br ${proj.gradient} group block h-full hover:border-white/[0.18] active:scale-[0.99] transition-all overflow-hidden`}
       >
-        {/* Cursor-follow spotlight overlay */}
         <motion.div
           aria-hidden
           style={{ background: spotlight }}
           className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
         />
 
-        {/* Header */}
         <div className="flex items-start justify-between mb-4 relative">
           <div className="card-icon-wrap transition-transform group-hover:scale-110 group-hover:rotate-[-4deg]">
             <proj.icon size={20} className={proj.accentColor} />
@@ -59,24 +56,20 @@ function ProjectCard({ proj, delay }: { proj: Project; delay: number }) {
           {proj.title}
         </h3>
         <p className="text-xs text-slate-500 mb-3 sm:mb-4 relative">{proj.client}</p>
-        {/* Description — hidden on mobile carousel, full on tablet+ grid */}
         <p className="hidden md:block text-slate-400 text-sm leading-[1.8] mb-5 relative">
           {proj.desc}
         </p>
 
-        {/* Impact — hidden on mobile carousel, full on tablet+ grid */}
         <div className="hidden md:block bg-white/[0.03] border border-white/[0.05] rounded-xl px-4 py-3 mb-5 relative">
           <p className="text-xs text-slate-500 font-mono">{proj.impact}</p>
         </div>
 
-        {/* Tags */}
         <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-4 sm:mb-5 relative max-h-[60px] md:max-h-none overflow-hidden">
           {proj.tags.map((tag) => (
             <span key={tag} className="tag">{tag}</span>
           ))}
         </div>
 
-        {/* CTA row */}
         <div className="flex items-center justify-between pt-4 border-t border-white/[0.06] relative">
           <span className={`inline-flex items-center gap-1.5 text-xs font-semibold ${proj.accentColor}`}>
             View Case Study
@@ -92,7 +85,6 @@ function ProjectCard({ proj, delay }: { proj: Project; delay: number }) {
     </motion.div>
   );
 }
-// ────────────────────────────────────────────────────────────────────────────
 
 export default function Portfolio() {
   const [active, setActive] = useState<Filter>('All');
@@ -106,7 +98,6 @@ export default function Portfolio() {
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-surface/30 to-transparent pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -129,7 +120,6 @@ export default function Portfolio() {
           </p>
         </motion.div>
 
-        {/* Filter tabs */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
@@ -151,8 +141,6 @@ export default function Portfolio() {
           ))}
         </motion.div>
 
-        {/* Project grid */}
-        {/* Mobile: carousel */}
         <MobileCarousel
           ariaLabel="Case studies"
           title={`Work · ${filtered.length} ${filtered.length === 1 ? 'project' : 'projects'}`}
@@ -163,14 +151,12 @@ export default function Portfolio() {
           ))}
         </MobileCarousel>
 
-        {/* Desktop / tablet: grid */}
         <div className="hidden md:grid md:grid-cols-2 xl:grid-cols-3 gap-5">
           {filtered.map((proj, i) => (
             <ProjectCard key={proj.id} proj={proj} delay={i * 0.1} />
           ))}
         </div>
 
-        {/* Bottom CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}

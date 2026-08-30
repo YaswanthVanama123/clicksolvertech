@@ -90,8 +90,6 @@ const testimonialPull = {
   gradient: 'from-emerald-500 to-teal-600',
 };
 
-// Import workaround removed
-
 export default function LongTerm() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-80px' });
@@ -103,7 +101,6 @@ export default function LongTerm() {
 
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
 
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -136,7 +133,6 @@ export default function LongTerm() {
           </p>
         </motion.div>
 
-        {/* Engagement model cards */}
         <div className="grid md:grid-cols-3 gap-5 mb-20">
           {engagements.map((eng, i) => (
             <motion.div
@@ -182,7 +178,6 @@ export default function LongTerm() {
           ))}
         </div>
 
-        {/* Why stay long-term */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -221,7 +216,6 @@ export default function LongTerm() {
           </div>
         </motion.div>
 
-        {/* Pull quote */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -245,7 +239,6 @@ export default function LongTerm() {
           </div>
         </motion.div>
 
-        {/* CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}

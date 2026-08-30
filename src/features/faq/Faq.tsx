@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDown, MessageCircleQuestion, ArrowRight } from 'lucide-react';
 import { Section, SectionHeader, GlowOrb } from '@/components/ui';
+import { OWNER_MAILTO } from '@/data/contact';
 import { fadeUpSm, inViewOnce } from '@/lib/motion';
 
 type FaqItem = {
@@ -63,7 +64,6 @@ const faqs: FaqItem[] = [
   },
 ];
 
-// FAQPage schema for Google rich results
 const faqJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
@@ -77,7 +77,6 @@ const faqJsonLd = {
 export default function Faq() {
   const [openIds, setOpenIds] = useState<Set<string>>(new Set());
 
-  // Open the item referenced by the URL hash on mount (deep-linking)
   useEffect(() => {
     const hash = window.location.hash.slice(1);
     if (!hash) return;
@@ -121,7 +120,6 @@ export default function Faq() {
         description="The questions every founder asks before hiring an engineering partner — answered up front so you don't have to."
       />
 
-      {/* Accordion list */}
       <div className="border-t border-white/[0.06]">
         {faqs.map((f, i) => {
           const isOpen = openIds.has(f.id);
@@ -157,9 +155,6 @@ export default function Faq() {
                 </span>
               </button>
 
-              {/* Panel — uses the CSS-grid `0fr → 1fr` trick for a buttery
-                  height transition. Browsers natively interpolate this without
-                  the stutter that `height: 0 → auto` introduces. */}
               <div
                 id={`${f.id}-panel`}
                 role="region"
@@ -179,7 +174,6 @@ export default function Faq() {
         })}
       </div>
 
-      {/* Still curious CTA */}
       <motion.div
         variants={fadeUpSm}
         initial="hidden"
@@ -197,7 +191,7 @@ export default function Faq() {
           </p>
         </div>
         <a
-          href="mailto:hanithavanama@clicksolvertech.com"
+          href={OWNER_MAILTO}
           className="btn-primary inline-flex flex-shrink-0 items-center justify-center gap-2 text-sm"
         >
           Ask the Founder

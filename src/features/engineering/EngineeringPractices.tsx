@@ -113,14 +113,12 @@ export default function EngineeringPractices() {
       ref={ref}
       className="py-12 sm:py-16 md:py-24 lg:py-28 relative overflow-hidden"
     >
-      {/* Backdrop */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-emerald-500/[0.02] to-transparent pointer-events-none" />
       <div className="absolute top-1/3 right-0 w-[600px] h-[400px] bg-emerald-500/[0.04] rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[500px] h-[400px] bg-cyan-500/[0.04] rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute inset-0 dot-grid opacity-15 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 relative z-10">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -146,8 +144,6 @@ export default function EngineeringPractices() {
           </p>
         </motion.div>
 
-        {/* ── Environment ladder ──────────────────────────────────────────── */}
-        {/* Mobile: Apple-style pill tabs, content panel below */}
         <MobilePillTabs
           ariaLabel="Engineering pipeline"
           className="mb-12"
@@ -164,7 +160,6 @@ export default function EngineeringPractices() {
           }}
         />
 
-        {/* Desktop: 4-col grid with horizontal connector */}
         <div className="hidden lg:block relative mb-16">
           <div className="absolute top-12 left-[12.5%] right-[12.5%] h-px bg-gradient-to-r from-slate-500/30 via-cyan-500/40 via-violet-500/40 to-emerald-500/40" />
 
@@ -175,7 +170,6 @@ export default function EngineeringPractices() {
           </div>
         </div>
 
-        {/* ── Practices grid ──────────────────────────────────────────────── */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -213,7 +207,6 @@ export default function EngineeringPractices() {
           ))}
         </div>
 
-        {/* CTA strip */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}

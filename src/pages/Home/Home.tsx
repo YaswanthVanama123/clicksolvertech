@@ -18,8 +18,6 @@ import Contact from '@/features/contact';
 export default function Home() {
   const { hash } = useLocation();
 
-  // When the route includes a hash (e.g. arriving at /#portfolio from a detail page),
-  // scroll to that section once it has mounted.
   useEffect(() => {
     if (!hash) {
       window.scrollTo({ top: 0, left: 0 });

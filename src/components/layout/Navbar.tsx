@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { Lightbulb } from 'lucide-react';
 import ExploreSheet from './ExploreSheet';
 
 export default function Navbar() {
@@ -24,7 +26,6 @@ export default function Navbar() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 flex items-center justify-between gap-3">
-          {/* Brand — logo + text */}
           <a
             href="#"
             className="font-display flex items-center gap-2.5 font-[900] text-[1.05rem] tracking-tight whitespace-nowrap text-white min-w-0 sm:text-[1.1rem]"
@@ -34,7 +35,6 @@ export default function Navbar() {
               alt="ClickSolver Technologies"
               className="h-9 w-9 sm:h-10 sm:w-10 object-contain flex-shrink-0"
               onError={(e) => {
-                // Hide gracefully until the real logo is dropped at public/logo.png
                 e.currentTarget.style.display = 'none';
               }}
             />
@@ -47,8 +47,14 @@ export default function Navbar() {
             </span>
           </a>
 
-          {/* Action pills — Apple style */}
           <div className="flex items-center gap-2 flex-shrink-0">
+            <Link
+              to="/what-we-build"
+              className="hidden md:inline-flex items-center gap-1.5 text-[13px] sm:text-sm font-medium text-white px-4 py-1.5 rounded-full bg-white/[0.07] border border-white/[0.12] hover:bg-white/[0.12] active:scale-95 transition-all"
+            >
+              <Lightbulb size={13} className="text-primary-light" />
+              What We Build
+            </Link>
             <button
               type="button"
               onClick={() => setExploreOpen(true)}

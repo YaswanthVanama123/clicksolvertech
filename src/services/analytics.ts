@@ -1,17 +1,13 @@
 import { logEvent, setUserProperties } from 'firebase/analytics';
 import { getAnalyticsClient } from './firebase';
 
-/**
- * Fire-and-forget analytics event. Resolves immediately even if analytics isn't
- * ready or configured — never blocks UI.
- */
 export async function track(event: string, params?: Record<string, unknown>) {
   try {
     const analytics = await getAnalyticsClient();
     if (!analytics) return;
     logEvent(analytics, event, params as Record<string, string | number | boolean>);
   } catch {
-    // analytics is best-effort — never throw to UI
+    return;
   }
 }
 
@@ -29,6 +25,6 @@ export async function setAnalyticsProperties(props: Record<string, string>) {
     if (!analytics) return;
     setUserProperties(analytics, props);
   } catch {
-    // ignore
+    return;
   }
 }

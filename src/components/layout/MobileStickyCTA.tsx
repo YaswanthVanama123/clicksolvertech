@@ -3,18 +3,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, type LucideIcon, Workflow, Building2, Sparkles } from 'lucide-react';
 
 type ContextualAction = {
-  /** id of a section element on the page */
   sectionId: string;
   label: string;
   icon?: LucideIcon;
-  /** anchor target (defaults to #contact) */
   href?: string;
 };
 
-/**
- * Contextual CTAs — when one of these sections is the most-visible section in
- * the viewport, the pill swaps to its label. Otherwise the default pill shows.
- */
 const contextual: ContextualAction[] = [
   {
     sectionId: 'enviromaster',
@@ -28,18 +22,12 @@ const contextual: ContextualAction[] = [
   },
 ];
 
-const HIDE_OVER = ['contact']; // don't show when these sections are in view
+const HIDE_OVER = ['contact'];
 
-/**
- * Apple-style floating action pill, mobile only.
- * Sits at the bottom of the viewport once the user scrolls past the hero,
- * and changes its label based on which section is currently most visible.
- */
 export default function MobileStickyCTA() {
   const [visible, setVisible] = useState(false);
   const [activeId, setActiveId] = useState<string | null>(null);
 
-  // Show once the hero is mostly out of view (≈ 70vh scrolled)
   useEffect(() => {
     const onScroll = () => setVisible(window.scrollY > window.innerHeight * 0.6);
     onScroll();
@@ -47,7 +35,6 @@ export default function MobileStickyCTA() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Track which contextual / hide section is currently most visible
   useEffect(() => {
     const ids = [...contextual.map((c) => c.sectionId), ...HIDE_OVER];
     const elements = ids
@@ -59,7 +46,6 @@ export default function MobileStickyCTA() {
 
     const obs = new IntersectionObserver(
       (entries) => {
-        // Update each entry's ratio in our running map
         entries.forEach((entry) => {
           if (!current || entry.intersectionRatio > current.ratio) {
             if (entry.isIntersecting) {

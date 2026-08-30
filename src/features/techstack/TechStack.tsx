@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { lazy, Suspense, useRef } from 'react';
 import { Code2 } from 'lucide-react';
+
+const TechGlobe = lazy(() => import('@/three/TechGlobe'));
 
 const techCategories = [
   {
@@ -42,7 +44,6 @@ const techCategories = [
   },
 ];
 
-// Flat marquee list for the scroll band
 const allTechs = [
   'React', 'Node.js', 'Spring Boot', 'Django', '.NET Core',
   'PostgreSQL', 'MongoDB', 'MySQL', 'Redis',
@@ -59,8 +60,13 @@ export default function TechStack() {
     <section id="tech" className="py-12 sm:py-16 md:py-24 lg:py-28 relative overflow-hidden" ref={ref}>
       <div className="absolute inset-0 dot-grid opacity-25 pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
-        {/* Header */}
+      <Suspense fallback={null}>
+        <div className="pointer-events-none absolute left-1/2 top-8 -translate-x-1/2 h-[380px] w-[380px] opacity-40 hidden md:block">
+          <TechGlobe className="absolute inset-0" />
+        </div>
+      </Suspense>
+
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -83,7 +89,6 @@ export default function TechStack() {
           </p>
         </motion.div>
 
-        {/* Category cards */}
         <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5 mb-16">
           {techCategories.map((cat, ci) => (
             <motion.div
@@ -114,7 +119,6 @@ export default function TechStack() {
           ))}
         </div>
 
-        {/* Marquee tech band */}
         <div className="relative overflow-hidden py-5 border-y border-white/[0.06]">
           <div className="absolute left-0 top-0 bottom-0 w-10 sm:w-24 bg-gradient-to-r from-bg to-transparent z-10" />
           <div className="absolute right-0 top-0 bottom-0 w-10 sm:w-24 bg-gradient-to-l from-bg to-transparent z-10" />

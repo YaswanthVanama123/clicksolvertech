@@ -1,6 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, useMotionValue, useSpring, useTransform, animate, useInView, useScroll } from 'framer-motion';
-import { ArrowRight, Play, CheckCircle2, Users, Briefcase, Globe, Award } from 'lucide-react';
+import { ArrowRight, Play, CheckCircle2, Users, Briefcase, Globe, Award, Lightbulb } from 'lucide-react';
+
+const HeroScene = lazy(() => import('@/three/HeroScene'));
 
 type StatItem =
   | { icon: typeof Briefcase; mode: 'count'; end: number; suffix: string; label: string }
@@ -20,19 +23,6 @@ const trust = [
   'Production-Hardened Architecture',
 ];
 
-const codeSnippet = `// EnviroMaster — Real-time monitoring
-const dashboard = await clicksolver
-  .cloud('AWS')
-  .deploy({
-    stack: ['React', 'Node.js', 'PostgreSQL'],
-    region: 'us-east-1',
-    ssl: true,
-    security: 'enterprise'
-  });
-
-// 99.99% uptime achieved ✓`;
-
-// ── Word-by-word reveal ──────────────────────────────────────────────────────
 function AnimatedHeadline() {
   const lines: { text: string; gradient?: boolean }[] = [
     { text: 'We Build Software' },
@@ -66,43 +56,6 @@ function AnimatedHeadline() {
   );
 }
 
-// ── Typewriter code block ────────────────────────────────────────────────────
-function TypewriterCode({ code, startDelay = 0 }: { code: string; startDelay?: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.3 });
-  const [shown, setShown] = useState('');
-
-  useEffect(() => {
-    if (!inView) return;
-    let i = 0;
-    let timer: ReturnType<typeof setTimeout> | undefined;
-    const startTimer = setTimeout(function tick() {
-      if (i > code.length) return;
-      setShown(code.slice(0, i));
-      i++;
-      timer = setTimeout(tick, 12);
-    }, startDelay);
-    return () => {
-      clearTimeout(startTimer);
-      if (timer) clearTimeout(timer);
-    };
-  }, [code, inView, startDelay]);
-
-  return (
-    <div ref={ref}>
-      <pre className="font-mono text-[13px] leading-[1.8] text-slate-300 overflow-x-auto min-h-[230px]">
-        <code>
-          {shown}
-          {shown.length < code.length && (
-            <span className="inline-block w-[7px] h-[1.05em] -mb-[3px] bg-primary-light animate-pulse ml-0.5 align-middle" />
-          )}
-        </code>
-      </pre>
-    </div>
-  );
-}
-
-// ── Count-up number ──────────────────────────────────────────────────────────
 function CountUp({ end, suffix = '' }: { end: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true });
@@ -129,7 +82,6 @@ function CountUp({ end, suffix = '' }: { end: number; suffix?: string }) {
   );
 }
 
-// ── Magnetic button (gentle pull toward cursor) ──────────────────────────────
 function MagneticButton({
   children,
   className = '',
@@ -168,19 +120,14 @@ function MagneticButton({
     </motion.a>
   );
 }
-// ─────────────────────────────────────────────────────────────────────────────
 
 export default function Hero() {
-  // Mouse parallax — track normalized cursor position relative to the section
   const sectionRef = useRef<HTMLElement>(null);
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
   const smx = useSpring(mx, { stiffness: 60, damping: 20 });
   const smy = useSpring(my, { stiffness: 60, damping: 20 });
 
-  // Scroll-linked parallax — orbs and code drift up at different speeds as the
-  // user scrolls past the hero. `target: sectionRef` measures how far through
-  // the section we've scrolled (0 → start, 1 → fully past).
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ['start start', 'end start'],
@@ -191,7 +138,6 @@ export default function Hero() {
   const scrollOpacity = useTransform(scrollYProgress, [0, 0.6, 1], [1, 0.6, 0]);
   const codeScrollY = useTransform(scrollYProgress, [0, 1], [0, -80]);
 
-  // Different orbs move at different intensities for a real parallax feel
   const orb1X = useTransform(smx, [-1, 1], [-40, 40]);
   const orb1Y = useTransform(smy, [-1, 1], [-30, 30]);
   const orb2X = useTransform(smx, [-1, 1], [30, -30]);
@@ -216,7 +162,6 @@ export default function Hero() {
       onMouseMove={handleMouseMove}
       className="relative min-h-screen flex items-center pt-20 pb-12 md:pt-24 md:pb-16 overflow-hidden"
     >
-      {/* Background layers */}
       <motion.div
         style={{ y: scrollY1, opacity: scrollOpacity }}
         className="absolute inset-0 bg-gradient-hero pointer-events-none"
@@ -226,7 +171,6 @@ export default function Hero() {
         className="absolute inset-0 dot-grid opacity-40 pointer-events-none"
       />
 
-      {/* Glowing orbs — drift with the cursor and scroll */}
       <motion.div style={{ y: scrollY3 }} className="absolute inset-0 pointer-events-none">
         <motion.div
           style={{ x: orb1X, y: orb1Y }}
@@ -244,9 +188,7 @@ export default function Hero() {
 
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 w-full relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 xl:gap-20 items-center">
-          {/* Left — Copy */}
           <div>
-            {/* Badge */}
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
@@ -259,10 +201,8 @@ export default function Hero() {
               </span>
             </motion.div>
 
-            {/* Headline — word-by-word reveal */}
             <AnimatedHeadline />
 
-            {/* Sub */}
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
@@ -274,7 +214,6 @@ export default function Hero() {
               and cloud-native infrastructure on AWS, GCP &amp; Azure.
             </motion.p>
 
-            {/* Trust bullets — staggered */}
             <motion.ul
               initial="hidden"
               animate="show"
@@ -299,7 +238,6 @@ export default function Hero() {
               ))}
             </motion.ul>
 
-            {/* CTAs */}
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
@@ -322,51 +260,47 @@ export default function Hero() {
                 </span>
                 View Our Work
               </a>
+              <Link
+                to="/what-we-build"
+                className="btn-ghost flex items-center justify-center gap-2 text-sm w-full sm:w-auto group border-primary/30 hover:border-primary/60"
+              >
+                <span className="w-8 h-8 rounded-full flex items-center justify-center bg-primary/15 border border-primary/30 group-hover:bg-primary/25 transition">
+                  <Lightbulb size={13} className="text-primary-light" />
+                </span>
+                What We Build
+                <ArrowRight size={14} className="text-slate-500 transition-transform group-hover:translate-x-1 group-hover:text-primary-light" />
+              </Link>
             </motion.div>
           </div>
 
-          {/* Right — Code card + floating stats */}
           <motion.div style={{ y: codeScrollY }} className="relative hidden lg:block">
             <motion.div
               style={{ x: codeX, y: codeY }}
-              className="relative"
+              className="relative h-[520px]"
             >
             <motion.div
-              initial={{ opacity: 0, scale: 0.92, rotateX: 18 }}
-              animate={{ opacity: 1, scale: 1, rotateX: 0 }}
-              transition={{ duration: 0.9, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="animate-float"
-              style={{ transformPerspective: 1000 }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className="absolute inset-0"
             >
-              {/* Code card */}
-              <div className="glass-card rounded-2xl p-6 shadow-card border border-white/[0.1] relative overflow-hidden">
-                {/* Conic glow border */}
-                <div className="absolute -inset-px rounded-2xl pointer-events-none opacity-40 bg-[conic-gradient(from_var(--a),transparent_0deg,rgba(99,102,241,0.5)_90deg,transparent_180deg)]" />
-
-                {/* Window chrome */}
-                <div className="flex items-center gap-2 mb-5 relative z-10">
-                  <div className="w-3 h-3 rounded-full bg-red-500/80" />
-                  <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
-                  <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
-                  <span className="ml-3 text-xs text-slate-500 font-mono">
-                    clicksolver-deploy.ts
-                  </span>
-                </div>
-                <div className="relative z-10">
-                  <TypewriterCode code={codeSnippet} startDelay={400} />
-                </div>
-                {/* Gradient fade bottom */}
-                <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-[#0D0D1E] to-transparent pointer-events-none" />
-              </div>
+              <Suspense
+                fallback={
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-64 h-64 rounded-full bg-primary/20 blur-[80px] animate-pulse-glow" />
+                  </div>
+                }
+              >
+                <HeroScene />
+              </Suspense>
             </motion.div>
 
-            {/* Floating stat cards */}
             {stats.map((stat, i) => {
               const positions = [
-                '-top-5 -left-8',
-                '-top-5 -right-8',
-                '-bottom-5 -left-8',
-                '-bottom-5 -right-8',
+                '-top-2 -left-6',
+                '-top-2 -right-6',
+                '-bottom-2 -left-6',
+                '-bottom-2 -right-6',
               ];
               const delays = [0.6, 0.75, 0.9, 1.05];
               return (
@@ -376,7 +310,7 @@ export default function Hero() {
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   transition={{ duration: 0.55, delay: delays[i], ease: [0.22, 1, 0.36, 1] }}
                   whileHover={{ y: -4, scale: 1.04 }}
-                  className={`absolute ${positions[i]} glass rounded-xl px-4 py-3 flex items-center gap-3 border border-white/[0.1] shadow-card`}
+                  className={`absolute ${positions[i]} z-10 glass rounded-xl px-4 py-3 flex items-center gap-3 border border-white/[0.1] shadow-card`}
                 >
                   <div className="card-icon-wrap !w-9 !h-9 !rounded-xl">
                     <stat.icon size={16} className="text-primary-light" />
@@ -394,7 +328,6 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        {/* Mobile stats — proper cards, not just text */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
