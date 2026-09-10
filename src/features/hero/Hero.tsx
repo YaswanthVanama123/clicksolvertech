@@ -1,9 +1,7 @@
-import { lazy, Suspense, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useMotionValue, useSpring, useTransform, animate, useInView, useScroll } from 'framer-motion';
 import { ArrowRight, Play, CheckCircle2, Users, Briefcase, Globe, Award, Lightbulb } from 'lucide-react';
-
-const HeroScene = lazy(() => import('@/three/HeroScene'));
 
 type StatItem =
   | { icon: typeof Briefcase; mode: 'count'; end: number; suffix: string; label: string }
@@ -282,17 +280,9 @@ export default function Hero() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute inset-0"
+              className="absolute inset-0 flex items-center justify-center"
             >
-              <Suspense
-                fallback={
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-64 h-64 rounded-full bg-primary/20 blur-[80px] animate-pulse-glow" />
-                  </div>
-                }
-              >
-                <HeroScene />
-              </Suspense>
+              <div className="w-64 h-64 rounded-full bg-primary/20 blur-[80px]" />
             </motion.div>
 
             {stats.map((stat, i) => {

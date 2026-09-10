@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Navbar, Footer, CredentialsMarquee, MobileStickyCTA } from '@/components/layout';
 import { ScrollProgress } from '@/components/ui';
@@ -14,6 +14,8 @@ import LongTerm from '@/features/longterm';
 import Testimonials from '@/features/testimonials';
 import Faq from '@/features/faq';
 import Contact from '@/features/contact';
+
+const ScrollStage = lazy(() => import('@/three/ScrollStage'));
 
 export default function Home() {
   const { hash } = useLocation();
@@ -32,12 +34,24 @@ export default function Home() {
 
   return (
     <div className="bg-bg min-h-screen text-white">
+      <Suspense fallback={null}>
+        <ScrollStage className="pointer-events-none fixed inset-0 z-0" />
+      </Suspense>
+
+      <div
+        className="pointer-events-none fixed inset-0 z-0"
+        style={{
+          background:
+            'radial-gradient(ellipse 85% 65% at 50% 45%, rgba(3,3,10,0.78) 0%, rgba(3,3,10,0.58) 55%, rgba(3,3,10,0.26) 100%)',
+        }}
+      />
+
       <div className="noise-overlay" />
 
       <ScrollProgress />
       <Navbar />
 
-      <main>
+      <main className="relative z-10">
         <Hero />
         <CredentialsMarquee />
         <Services />
@@ -53,7 +67,9 @@ export default function Home() {
         <Contact />
       </main>
 
-      <Footer />
+      <div className="relative z-10">
+        <Footer />
+      </div>
 
       <MobileStickyCTA />
     </div>
